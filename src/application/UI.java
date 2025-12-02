@@ -3,6 +3,7 @@ package application;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.enums.Color;
+import utils.console.ConsoleUtils;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -31,6 +32,11 @@ public class UI {
     public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+
+    public static void clearScreen() {
+        ConsoleUtils.clearScreen();
+    }
+
 
     public static ChessPosition readChessPosition(Scanner sc) {
         try {
