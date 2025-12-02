@@ -39,4 +39,21 @@ public abstract class ChessPiece extends Piece {
         }
     }
 
+    protected void addSingleStepMoves(boolean[][] mat, int[][] directions){
+        for(int[] d: directions){
+            Position aux = new Position(
+                    position.getRow() + d[0],
+                    position.getColumn() + d[1]
+            );
+
+            if(getBoard().positionExists(aux) &&
+                (!getBoard().thereIsAPiece(aux)|| isThereOpponentPiece(aux))
+            ) {
+                mat[aux.getRow()][aux.getColumn()] = true;
+            }
+
+
+        }
+    }
+
 }
