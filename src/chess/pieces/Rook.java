@@ -18,49 +18,18 @@ public class Rook extends ChessPiece {
     @Override
     public boolean[][] possibleMoves() {
         boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
-        Position auxP = new Position(0, 0);
 
+        int[][] rookDirections = {
+                {-1, 0}, // cima
+                {1, 0},  // baixo
+                {0, -1}, // esquerda
+                {0, 1}   // direita
+        };
 
-        //above
-        auxP.setValues(position.getRow() - 1, position.getColumn());
-        while (getBoard().positionExists(auxP) && !getBoard().thereIsAPiece(auxP)) {
-            mat[auxP.getRow()][auxP.getColumn()] = true;
-            auxP.setRow(auxP.getRow() - 1);
-        }
-        if(getBoard().positionExists(auxP) && isThereOpponentPiece(auxP)){
-            mat[auxP.getRow()][auxP.getColumn()] = true;
-        }
+        addLinearMoves(mat, rookDirections);
 
-        //left
-        auxP.setValues(position.getRow(), position.getColumn() - 1);
-        while (getBoard().positionExists(auxP) && !getBoard().thereIsAPiece(auxP)) {
-            mat[auxP.getRow()][auxP.getColumn()] = true;
-            auxP.setColumn(auxP.getColumn() - 1);
-        }
-        if(getBoard().positionExists(auxP) && isThereOpponentPiece(auxP)){
-            mat[auxP.getRow()][auxP.getColumn()] = true;
-        }
-
-        //right
-        auxP.setValues(position.getRow(), position.getColumn() + 1);
-        while (getBoard().positionExists(auxP) && !getBoard().thereIsAPiece(auxP)) {
-            mat[auxP.getRow()][auxP.getColumn()] = true;
-            auxP.setColumn(auxP.getColumn() + 1);
-        }
-        if(getBoard().positionExists(auxP) && isThereOpponentPiece(auxP)){
-            mat[auxP.getRow()][auxP.getColumn()] = true;
-        }
-
-        //below
-        auxP.setValues(position.getRow() + 1, position.getColumn());
-        while (getBoard().positionExists(auxP) && !getBoard().thereIsAPiece(auxP)) {
-            mat[auxP.getRow()][auxP.getColumn()] = true;
-            auxP.setRow(auxP.getRow() + 1);
-        }
-        if(getBoard().positionExists(auxP) && isThereOpponentPiece(auxP)){
-            mat[auxP.getRow()][auxP.getColumn()] = true;
-        }
         return mat;
     }
+
 }
 
