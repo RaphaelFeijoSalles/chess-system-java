@@ -22,6 +22,10 @@ public abstract class ChessPiece extends Piece {
         return p!= null && p.getColor() != color;
     }
 
+    public ChessPosition getChessPosition(){
+        return ChessPosition.fromPosition(position);
+    }
+
     protected void addLinearMoves(boolean[][] mat, int[][] directions) {
         for (int[] d : directions) {
             Position aux = new Position(position.getRow() + d[0], position.getColumn() + d[1]);
