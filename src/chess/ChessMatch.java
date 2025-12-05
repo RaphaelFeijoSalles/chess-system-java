@@ -93,7 +93,8 @@ public class ChessMatch {
     }
 
     private Piece makeMove(Position source, Position target){
-        Piece p = board.removePiece(source);
+        ChessPiece p = (ChessPiece) board.removePiece(source);
+        p.increaseMoveCount();
         Piece capturedPiece = board.removePiece(target);
         board.placePiece(p, target);
 
@@ -105,7 +106,8 @@ public class ChessMatch {
     }
 
     private void undoMove(Position source, Position target, Piece capturedPiece){
-         Piece p = board.removePiece(target);
+        ChessPiece p = (ChessPiece) board.removePiece(target);
+         p.decreaseMoveCount();
          board.placePiece(p, source);
 
          if(capturedPiece != null){
@@ -177,24 +179,25 @@ public class ChessMatch {
         if(!testCheck(color)){
             return false;
         }
-        List<Piece> list = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == color).toList();
-        for(Piece p : list){
-            boolean[][] mat = p.possibleMoves();
+        List<Piece> list = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == color).toList(); //peças da cor atual
+        for(Piece p : list){ // para cada peça
+            boolean[][] mat = p.possibleMoves(); //cria uma matriz de possíveis movimentos para essa peça
             for (int i = 0; i < board.getRows(); i++) {
-                for (int j = 0; j < board.getColumns(); j++) {
-                    if(mat[i][j]){
-                        Position source = ((ChessPiece)p).getChessPosition().toPosition();
-                        Position target = new Position(i, j);
-                        Piece capturedPiece = makeMove(source, target);
-                        boolean resultTestCheck = testCheck(color);
-                        undoMove(source, target, capturedPiece);
-                        if(!resultTestCheck){
-                            return false;
+                for (int j = 0; j < board.getColumns(); j++) { //percorre a matriz
+                    if(mat[i][j]){ //se nessa posição da matriz
+                        Position source = ((ChessPiece)p).getChessPosition().toPosition(); //a posição dessa peça atual
+                        Position target = new Position(i, j); //para a posição pretendida
+                        Piece capturedPiece = makeMove(source, target);//eu fizer um movimento
+                        boolean resultTestCheck = testCheck(color);//e a peça entrar em check
+                        undoMove(source, target, capturedPiece); //desfaço o movimento(foi só para testar)
+                        if(!resultTestCheck){//se o rei não está ameaçado de check(a peça nao pode matar ele)
+                            return false; //quer dizer que se eu fizer esse movimento o rei nao estará em checkmate,
+                            // logo o rei tem um movimento para sair daquela posição
                         }
                     }
                 }
             }
-        }
+        }//testando todas as peças e todos os possíveis movimentos delas, se o rei não teve escapatória em nenhuma possibilidade ele está em checkmate
         return true;
     }
 
