@@ -72,4 +72,10 @@ public abstract class ChessPiece extends Piece {
         }
     }
 
+    protected boolean canMove(Position p) {
+        return getBoard().positionExists(p) &&
+                (!getBoard().thereIsAPiece(p) || isThereOpponentPiece(p));
+    }
+
+
 }
