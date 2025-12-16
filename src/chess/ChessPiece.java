@@ -69,8 +69,6 @@ public abstract class ChessPiece extends Piece {
             ) {
                 mat[aux.getRow()][aux.getColumn()] = true;
             }
-
-
         }
     }
 
