@@ -6,16 +6,10 @@ import chess.ChessPosition;
 import chess.enums.Color;
 import utils.console.ConsoleUtils;
 
-import java.util.Arrays;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
+import java.util.*;
 
 
 public class UI {
-
-    // https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
 
     //Cores do texto
     public static final String ANSI_RESET = "\u001B[0m";
@@ -46,7 +40,7 @@ public class UI {
     public static ChessPosition readChessPosition(Scanner sc) {
         try {
             String s = sc.nextLine();
-            char column = s.charAt(0);
+            char column = s.toLowerCase().charAt(0);
             int row = Integer.parseInt(s.substring(1));
             return new ChessPosition(column, row);
         } catch (RuntimeException e) {
